@@ -1,0 +1,107 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+    <script src="js/simple-slider.js"></script>
+
+    <link href="css/simple-slider.css" rel="stylesheet" type="text/css" />
+    <link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Arbutus+Slab' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: 'Arbutus Slab', serif;
+            background-color:#EAEAEA;
+            color:#474747;
+        }
+
+        [class^=slider] {
+            display: inline-block;
+            /*margin-bottom: 30px;*/
+        }
+
+        .output {
+            color: #888;
+            font-size: 14px;
+            padding-top: 1px;
+            margin-left: 5px;
+            vertical-align: top;
+        }
+
+        h2 {
+            padding-left:40%;
+            padding-top:2%;
+        }
+
+        .mybutton {
+            font-weight:700;
+        }
+        #content {
+            margin-left:500px;
+        }
+
+        .sliders{
+            padding-top:30px;
+            margin-left: 500px;
+        }
+
+        #resultContent {
+            padding-top: 10px;
+            margin-left: 500px;
+        }
+
+        hr {
+            border: 0;
+            clear: both;
+            display: block;
+            width: 50%;
+            background-color: #A9A9A9;
+            height: 1px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>MGC Calculater</h2>
+    <hr>
+    <div class="sliders">
+        Clients: <input type="text" data-slider="true" id='clients' data-slider-range="1,10" data-slider-step="1" data-slider-highlight="true" data-slider-theme="volume" /><span></span>
+    </div>
+    <br />
+    <div class="sliders">
+        Bills: <input type="text" data-slider="true" id='bills' data-slider-range="1,10" data-slider-step="1" data-slider-highlight="true" data-slider-theme="volume" /><span></span>
+    </div>
+    <br />
+
+    <div id="resultContent">
+        <button class="btn btn-info mybutton">Enter</button>
+        <span id="results"></span>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var results = null;
+            $("[data-slider]")
+              .each(function () {
+                  var input = $(this);
+                  $("<span>")
+                    .addClass("output")
+                    .insertAfter($(this));
+              })
+              .bind("slider:ready slider:changed", function (event, data) {
+                  $(this)
+                    .nextAll(".output:first")
+                      .html(data.value.toFixed(0));
+              });
+            $('button').on('click', function () {
+                var clients = parseInt($('#clients').val());
+                var bills = parseInt($('#bills').val());
+                console.log(bills + clients);
+                var results = bills + clients;
+                $('#results').html('Total: ' + results).hide();
+                $('#results').fadeIn("slow");
+            });
+        });
+  </script>
+</body>
+</html>
